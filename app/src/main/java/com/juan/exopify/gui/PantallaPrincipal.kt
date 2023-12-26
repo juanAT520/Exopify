@@ -73,7 +73,7 @@ class MiViewModel : ViewModel() {
     val estaAbierto = _estaAbierto.asStateFlow()
     private val _caratulaCancionActual = MutableStateFlow(R.drawable.music1)
     val caratulaCancionActual = _caratulaCancionActual.asStateFlow()
-    private val _tituloCancionActual = MutableStateFlow("")
+    private val _tituloCancionActual = MutableStateFlow("Texto genérico X")
     val tituloCancionActual = _tituloCancionActual.asStateFlow()
     private val _grupoCancionActual = MutableStateFlow("")
     val grupoCancionActual = _grupoCancionActual.asStateFlow()
@@ -111,7 +111,7 @@ class MiViewModel : ViewModel() {
         _listaMusica.value = leerArchivo(context, numero)
     }
 
-    fun resetearTituloCancionActual() {
+    private fun resetearTituloCancionActual() {
         _tituloCancionActual.value = ""
     }
 
@@ -131,12 +131,12 @@ class MiViewModel : ViewModel() {
         _posicionActual.value = nuevaPosicion
     }
 
-    fun cambiarPlaylist(context: Context) {
+    fun cambiarPlaylist() {
         _exoPlayer.value!!.pause()
+        _exoPlayer.value!!.stop()
         resetearTituloCancionActual()
         _indiceCancionActual.value = 0
         _exoPlayer.value!!.clearMediaItems()
-        inicializaExoPlayer(context, _listaMusica.value[_indiceCancionActual.value].cancion)
     }
 
     fun abrirInfo() {
@@ -237,7 +237,7 @@ fun PantallaPrincipal(drawerState: DrawerState, scope: CoroutineScope) {
                     TextButton(
                         onClick = {
                             miViewModel.setearPlaylist(context, 1)
-                            miViewModel.cambiarPlaylist(context)
+                            miViewModel.cambiarPlaylist()
                             scope.launch {
                                 drawerState.close()
                             }
@@ -256,7 +256,7 @@ fun PantallaPrincipal(drawerState: DrawerState, scope: CoroutineScope) {
                     TextButton(
                         onClick = {
                             miViewModel.setearPlaylist(context, 2)
-                            miViewModel.cambiarPlaylist(context)
+                            miViewModel.cambiarPlaylist()
                             scope.launch {
                                 drawerState.close()
                             }

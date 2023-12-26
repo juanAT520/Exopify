@@ -31,43 +31,41 @@ fun GrafoNavegacion() {
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        title = { Text(text = "Exopify") },
-                        navigationIcon = {
-                            IconButton(onClick = {
-                                scope.launch {
-                                    if (drawerState.isOpen) {
-                                        drawerState.close()
-                                    } else {
-                                        drawerState.open()
-                                    }
-                                }
-                            }) {
-                                Icon(Icons.Filled.Menu, contentDescription = "Menu")
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Exopify") },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        scope.launch {
+                            if (drawerState.isOpen) {
+                                drawerState.close()
+                            } else {
+                                drawerState.open()
                             }
                         }
-                    )
-                }
-            ) {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(it),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    NavHost(
-                        navController = navController,
-                        startDestination = "principal"
-                    ) {
-                        composable("principal") {
-                            PantallaPrincipal(drawerState, scope)
-                        }
+                    }) {
+                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
                     }
                 }
+            )
+        }
+    ) {
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            NavHost(
+                navController = navController,
+                startDestination = "principal"
+            ) {
+                composable("principal") {
+                    PantallaPrincipal(drawerState, scope)
+                }
             }
-
-
+        }
+    }
 }
 
